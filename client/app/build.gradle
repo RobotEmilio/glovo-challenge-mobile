@@ -1,0 +1,48 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply from: '../android_dependencies.gradle'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.robotemilio.glovotest"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    def d = rootProject.ext.dependencies
+    def td = rootProject.ext.testDependencies
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation d.appcompat
+    implementation d.androidKtx
+    implementation d.androidArchLifecycle
+    implementation d.androidArchLifecycleExtensions
+    implementation d.dagger
+    kapt d.daggerCompiler
+    implementation d.daggerAndroid
+    implementation d.daggerAndroidSupport
+    kapt d.daggerAndroidProcessor
+    implementation d.gmaps
+    implementation d.kotlin
+    implementation d.retrofit
+    implementation d.retrofitRxAdapter
+    implementation d.rxkotlin
+
+    testImplementation td.junit
+    androidTestImplementation td.androidTestRunner
+    androidTestImplementation td.espresso
+}
