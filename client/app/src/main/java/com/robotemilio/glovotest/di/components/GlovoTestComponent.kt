@@ -1,10 +1,10 @@
 package com.robotemilio.glovotest.di.components
 
-import android.app.Activity
 import android.app.Application
 import com.robotemilio.glovotest.GlovoTestApplication
 import com.robotemilio.glovotest.di.ActivityBuilder
 import com.robotemilio.glovotest.di.modules.GlovoTestModule
+import com.robotemilio.glovotest.di.modules.NetModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -16,6 +16,7 @@ import javax.inject.Singleton
 @Component(modules = [
     AndroidSupportInjectionModule::class,
     GlovoTestModule::class,
+    NetModule::class,
     ActivityBuilder::class
 ])
 interface GlovoTestComponent : AndroidInjector<DaggerApplication> {

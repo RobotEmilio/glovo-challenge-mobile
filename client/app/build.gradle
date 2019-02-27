@@ -37,9 +37,15 @@ dependencies {
     implementation d.daggerAndroidSupport
     kapt d.daggerAndroidProcessor
     implementation d.gmaps
+    implementation d.gson
     implementation d.kotlin
+    implementation d.okhttp
+    implementation d.okhttpLogging
     implementation d.retrofit
     implementation d.retrofitRxAdapter
+    implementation d.retrofitGsonConverter
+    implementation d.rxandroid
+    implementation d.rxjava
     implementation d.rxkotlin
 
     testImplementation td.junit
