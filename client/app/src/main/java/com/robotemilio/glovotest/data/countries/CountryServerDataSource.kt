@@ -6,9 +6,9 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 class CountryServerDataSource @Inject constructor(private val countriesApi: CountriesApi) :
-    ServerDataSource<Flowable<List<CountryDTO>>> {
+    ServerDataSource<CountryDTO> {
 
-    override fun retrieve(): Flowable<List<CountryDTO>> {
+    override fun list(): Flowable<List<CountryDTO>> {
         return countriesApi.getCountryList()
     }
 

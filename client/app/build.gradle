@@ -31,6 +31,7 @@ dependencies {
     implementation d.androidKtx
     implementation d.androidArchLifecycle
     implementation d.androidArchLifecycleExtensions
+    implementation d.androidMapsUtils
     implementation d.dagger
     kapt d.daggerCompiler
     implementation d.daggerAndroid

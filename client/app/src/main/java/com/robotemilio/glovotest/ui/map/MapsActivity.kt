@@ -10,6 +10,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.robotemilio.glovotest.R
+import com.robotemilio.glovotest.domain.model.City
 import com.robotemilio.glovotest.domain.model.Country
 import com.robotemilio.glovotest.extensions.getViewModel
 import com.robotemilio.glovotest.extensions.observe
@@ -37,12 +38,25 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
 
     private fun initViewModel() {
         mapViewModel = getViewModel(this, viewModelFactory)
-        mapViewModel.testInjection()
 
         //Manage subscriptions
         observe(mapViewModel.countriesLiveData, ::onCountriesReceived)
+        observe(mapViewModel.citiesLiveData, ::onCitiesReceived)
+        observe(mapViewModel.currentCityLiveData, ::onCurrentCityChanged)
 
         mapViewModel.getCountryList()
+        mapViewModel.getCityList()
+    }
+
+    private fun onCurrentCityChanged(city: City?) {
+        Log.d("ANTONIO", city.toString())
+    }
+
+    private fun onCitiesReceived(cities: List<City>?) {
+        Log.d("ANTONIO", cities.toString())
+        cities?.first()?.also {
+            mapViewModel.getCityInfo(it.code)
+        }
     }
 
     private fun onCountriesReceived(countries: List<Country>?) {

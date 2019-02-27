@@ -8,6 +8,7 @@ rootProject.ext {
     androidKtxVersion = '1.0.1'
     androidLifecycleVersion = '1.1.1'
     androidLifecycleExtensionsVersion = '2.0.0'
+    androidMapsUtilsVersion = '0.4'
     appCompatVersion = '1.0.0-beta01'
     daggerVersion = "2.15"
     gmapsVersion = '16.1.0'
@@ -29,6 +30,7 @@ rootProject.ext {
             androidArchLifecycle          : "androidx.lifecycle:lifecycle-viewmodel:$androidLifecycleVersion",
             androidArchLifecycleExtensions: "androidx.lifecycle:lifecycle-extensions:$androidLifecycleExtensionsVersion",
             androidKtx                    : "androidx.core:core-ktx:$androidKtxVersion",
+            androidMapsUtils              : "com.google.maps.android:android-maps-utils:$androidMapsUtilsVersion",
             appcompat                     : "androidx.appcompat:appcompat:$appCompatVersion",
             dagger                        : "com.google.dagger:dagger:$daggerVersion",
             daggerCompiler                : "com.google.dagger:dagger-compiler:$daggerVersion",
