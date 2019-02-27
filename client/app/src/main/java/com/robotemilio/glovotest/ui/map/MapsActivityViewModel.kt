@@ -1,10 +1,11 @@
 package com.robotemilio.glovotest.ui.map
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.robotemilio.glovotest.domain.model.City
 import com.robotemilio.glovotest.domain.model.Country
 import com.robotemilio.glovotest.domain.usecase.GetCountries
 import com.robotemilio.glovotest.ui.common.BaseViewModel
+import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -15,10 +16,8 @@ class MapsActivityViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     val countriesLiveData = MutableLiveData<List<Country>>()
-
-    fun testInjection() {
-        Log.d("HOLA", "MUNDO")
-    }
+    val citiesLiveData = MutableLiveData<List<City>>()
+    val currentCityLiveData = MutableLiveData<City>()
 
     fun getCountryList() {
         getCountries.getCountryList()
@@ -32,6 +31,37 @@ class MapsActivityViewModel @Inject constructor(
                     countriesLiveData.value = countries
                 })
             .also(::addDisposable)
+    }
+
+    fun getCityList() {
+        getCountries.getCityList()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onError = { error ->
+                    errorsReceived.value = error
+                },
+                onNext = { cities ->
+                    citiesLiveData.value = cities
+                }
+            )
+            .also(::addDisposable)
+    }
+
+    fun getCityInfo(code: String) {
+        citiesLiveData.value?.find { it.code == code }
+            ?.let { getCountries.getCityInfo(it) }
+            ?.subscribeOn(Schedulers.io())
+            ?.observeOn(AndroidSchedulers.mainThread())
+            ?.subscribeBy(
+                onError = { error ->
+                    errorsReceived.value = error
+                },
+                onNext = { city ->
+                    currentCityLiveData.value = city
+                }
+            )
+            ?.also(::addDisposable)
     }
 
 }
