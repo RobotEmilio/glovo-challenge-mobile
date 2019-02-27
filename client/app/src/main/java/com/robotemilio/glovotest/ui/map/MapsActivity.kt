@@ -1,6 +1,7 @@
 package com.robotemilio.glovotest.ui.map
 
 import android.os.Bundle
+import android.util.Log
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -9,7 +10,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.robotemilio.glovotest.R
+import com.robotemilio.glovotest.domain.model.Country
 import com.robotemilio.glovotest.extensions.getViewModel
+import com.robotemilio.glovotest.extensions.observe
 import com.robotemilio.glovotest.ui.common.BaseActivity
 
 class MapsActivity : BaseActivity(), OnMapReadyCallback {
@@ -21,13 +24,29 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+        setViews()
+        initViewModel()
+    }
+
+    private fun setViews() {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+    }
 
+    private fun initViewModel() {
         mapViewModel = getViewModel(this, viewModelFactory)
         mapViewModel.testInjection()
+
+        //Manage subscriptions
+        observe(mapViewModel.countriesLiveData, ::onCountriesReceived)
+
+        mapViewModel.getCountryList()
+    }
+
+    private fun onCountriesReceived(countries: List<Country>?) {
+        Log.d("ANTONIO", countries.toString())
     }
 
     /**
