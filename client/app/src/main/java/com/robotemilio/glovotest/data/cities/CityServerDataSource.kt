@@ -16,6 +16,8 @@ class CityServerDataSource @Inject constructor(private val countriesApi: Countri
 
     fun get(code : String): Flowable<CityDTO> {
         return countriesApi.getCityInfo(code)
-            .doOnError { CustomException(DATA_SOURCE, this.javaClass.name) }
+            .onErrorResumeNext { t: Throwable ->
+                Flowable.error(CustomException(CustomException.Layer.DATA_SOURCE, CustomException.Code.NETWORK_ERROR))
+            }
     }
 }

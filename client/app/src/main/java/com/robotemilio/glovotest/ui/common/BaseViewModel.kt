@@ -16,7 +16,7 @@ abstract class BaseViewModel : ViewModel() {
     /**
      * It will contain the errors that UI must receive
      */
-    protected val errorsReceived = MutableLiveData<Throwable>()
+    val errorsReceived = MutableLiveData<Throwable>()
 
     /**
      * Add a usecase execution to the pool of disposables
