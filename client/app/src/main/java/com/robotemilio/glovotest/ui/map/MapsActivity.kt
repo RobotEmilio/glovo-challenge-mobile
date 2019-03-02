@@ -1,7 +1,5 @@
 package com.robotemilio.glovotest.ui.map
 
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -13,7 +11,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolygonOptions
-import com.google.android.gms.maps.model.PolylineOptions
 import com.robotemilio.glovotest.R
 import com.robotemilio.glovotest.domain.exception.CustomException
 import com.robotemilio.glovotest.domain.exception.CustomException.Code.NETWORK_ERROR
@@ -42,6 +39,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
+
         mapFragment.getMapAsync(this)
     }
 

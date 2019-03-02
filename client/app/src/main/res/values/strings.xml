@@ -1,4 +1,8 @@
 <resources>
-    <string name="app_name">Glovo Test</string>
+    <string name="app_name" translatable="false">Glovo Test</string>
     <string name="title_activity_maps">Map</string>
+    <string name="dialog_gps_permission_title">Gps permission</string>
+    <string name="dialog_gps_permission_message">We need the GPS permission to show you where you are.\nGrant access to GPS? </string>
+    <string name="dialog_retry">Retry</string>
+    <string name="dialog_deny">Deny</string>
 </resources>
