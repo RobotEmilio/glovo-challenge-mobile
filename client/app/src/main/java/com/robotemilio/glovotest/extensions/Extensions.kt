@@ -3,6 +3,7 @@ package com.robotemilio.glovotest.extensions
 import android.content.Context
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
@@ -32,4 +33,8 @@ fun Context.logError(throwable: Throwable, printStackTrace: Boolean = false) {
     if (printStackTrace) {
         throwable.printStackTrace()
     }
+}
+
+fun Context.toast(msg : String) {
+    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 }

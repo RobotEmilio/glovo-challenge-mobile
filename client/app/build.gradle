@@ -8,7 +8,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.robotemilio.glovotest"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -20,18 +20,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    buildToolsVersion '28.0.3'
 }
 
 dependencies {
     def d = rootProject.ext.dependencies
     def td = rootProject.ext.testDependencies
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation d.appcompat
     implementation d.androidKtx
     implementation d.androidArchLifecycle
     implementation d.androidArchLifecycleExtensions
     implementation d.androidMapsUtils
+    implementation d.constraintLayout
     implementation d.dagger
     kapt d.daggerCompiler
     implementation d.daggerAndroid
@@ -48,7 +49,6 @@ dependencies {
     implementation d.rxandroid
     implementation d.rxjava
     implementation d.rxkotlin
-
     testImplementation td.junit
     androidTestImplementation td.androidTestRunner
     androidTestImplementation td.espresso
