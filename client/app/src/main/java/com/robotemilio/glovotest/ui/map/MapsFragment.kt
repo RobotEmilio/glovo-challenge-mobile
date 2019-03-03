@@ -9,11 +9,21 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolygonOptions
+import com.google.maps.android.clustering.Cluster
+import com.google.maps.android.clustering.ClusterManager
+import com.google.maps.android.clustering.algo.Algorithm
+import com.google.maps.android.clustering.algo.GridBasedAlgorithm
+import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgorithm
+import com.google.maps.android.clustering.algo.PreCachingAlgorithmDecorator
 import com.robotemilio.glovotest.R
 import com.robotemilio.glovotest.domain.exception.CustomException
 import com.robotemilio.glovotest.domain.model.City
 import com.robotemilio.glovotest.domain.model.Country
+import com.robotemilio.glovotest.domain.model.MapPoint
 import com.robotemilio.glovotest.extensions.getViewModel
 import com.robotemilio.glovotest.extensions.logError
 import com.robotemilio.glovotest.extensions.observe
@@ -24,6 +34,7 @@ class MapsFragment : BaseFragment() {
     private lateinit var mMap: GoogleMap
     private lateinit var mapView: MapView
     private lateinit var mapViewModel: MapsActivityViewModel
+    private lateinit var mClusterManager: ClusterManager<MapPoint>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_maps, container, false)
@@ -40,8 +51,15 @@ class MapsFragment : BaseFragment() {
         mapView.onResume()
         mapView.getMapAsync { googleMap ->
             mMap = googleMap
+            setUpClusterManager()
             initViewModel()
         }
+    }
+
+    private fun setUpClusterManager() {
+        mClusterManager = ClusterManager(activity, mMap)
+        mMap.setOnCameraIdleListener(mClusterManager)
+        mMap.setOnMarkerClickListener(mClusterManager)
     }
 
     private fun initViewModel() {
@@ -53,7 +71,6 @@ class MapsFragment : BaseFragment() {
         observe(mapViewModel.currentCityLiveData, ::onCurrentCityChanged)
         observe(mapViewModel.errorsReceived, ::handleErrors)
 
-        mapViewModel.getCountryList()
         mapViewModel.getCityList()
     }
 
@@ -63,11 +80,30 @@ class MapsFragment : BaseFragment() {
 
     private fun onCitiesReceived(cities: List<City>?) {
 
-        cities?.forEach(::drawPolygon)
+        cities?.forEach {
+            drawPolygon(it)
+            addClusterMarker(it)
+        }
+    }
+
+    private fun addClusterMarker(city: City) {
+        mClusterManager.apply {
+            addItem(MapPoint(city, title = city.name, snippet = city.code))
+
+            setOnClusterClickListener { cluster ->
+                val builder = LatLngBounds.builder()
+                cluster.items.forEach { point -> builder.include(point.position) }
+                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 50))
+                true
+            }
+            setOnClusterItemClickListener {
+                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(it.getBounds(), 50))
+                true
+            }
+        }
     }
 
     private fun onCountriesReceived(countries: List<Country>?) {
-        Log.d("ANTONIO", countries.toString())
     }
 
     private fun drawPolygon(city: City) {
