@@ -4,6 +4,7 @@ import com.google.maps.android.PolyUtil
 import com.robotemilio.glovotest.domain.model.AreaShape
 import com.robotemilio.glovotest.domain.model.City
 import com.robotemilio.glovotest.domain.model.Country
+import com.robotemilio.glovotest.domain.model.MapPoint
 import javax.inject.Inject
 
 class CityMapper @Inject constructor() {
