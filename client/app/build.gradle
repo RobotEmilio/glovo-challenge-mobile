@@ -31,6 +31,7 @@ dependencies {
     implementation d.androidKtx
     implementation d.androidArchLifecycle
     implementation d.androidArchLifecycleExtensions
+    implementation d.androidArchNavigation
     implementation d.androidMapsUtils
     implementation d.constraintLayout
     implementation d.dagger
@@ -49,7 +50,9 @@ dependencies {
     implementation d.rxandroid
     implementation d.rxjava
     implementation d.rxkotlin
+
     testImplementation td.junit
     androidTestImplementation td.androidTestRunner
     androidTestImplementation td.espresso
+
 }
