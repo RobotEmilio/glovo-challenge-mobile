@@ -1,6 +1,7 @@
 package com.robotemilio.glovotest.ui.splash
 
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
@@ -8,6 +9,7 @@ import androidx.core.content.ContextCompat
 import com.robotemilio.glovotest.R
 import com.robotemilio.glovotest.extensions.toast
 import com.robotemilio.glovotest.ui.common.BaseActivity
+import com.robotemilio.glovotest.ui.map.MapsActivity
 
 class SplashActivity : BaseActivity() {
 
@@ -23,6 +25,8 @@ class SplashActivity : BaseActivity() {
 
     private fun onGPSPermissionAccepted() {
         toast("GPS granted")
+        val intent = Intent(this, MapsActivity::class.java)
+        startActivity(intent)
     }
 
     private fun onGPSPermissionDenied() {
@@ -30,7 +34,6 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun checkPermissions() {
-
         if (ContextCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             onGPSPermissionAccepted()
         } else {
