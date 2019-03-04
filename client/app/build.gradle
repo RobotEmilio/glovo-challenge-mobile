@@ -23,6 +23,10 @@ android {
     buildToolsVersion '28.0.3'
 }
 
+androidExtensions {
+    experimental = true
+}
+
 dependencies {
     def d = rootProject.ext.dependencies
     def td = rootProject.ext.testDependencies

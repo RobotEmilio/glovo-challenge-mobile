@@ -11,7 +11,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class MapsActivityViewModel @Inject constructor(
+class MapsViewModel @Inject constructor(
     private val getCountries: GetCountries
 ) : BaseViewModel() {
 
@@ -48,12 +48,11 @@ class MapsActivityViewModel @Inject constructor(
             .also(::addDisposable)
     }
 
-    fun getCityInfo(code: String) {
-        citiesLiveData.value?.find { it.code == code }
-            ?.let { getCountries.getCityInfo(it) }
-            ?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribeBy(
+    fun getCityInfo(city: City) {
+            getCountries.getCityInfo(city)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
                 onError = { error ->
                     errorsReceived.value = error
                 },
@@ -61,7 +60,7 @@ class MapsActivityViewModel @Inject constructor(
                     currentCityLiveData.value = city
                 }
             )
-            ?.also(::addDisposable)
+            .also(::addDisposable)
     }
 
 }

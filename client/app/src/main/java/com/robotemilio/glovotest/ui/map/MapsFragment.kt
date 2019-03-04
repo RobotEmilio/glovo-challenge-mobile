@@ -8,17 +8,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolygonOptions
-import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
-import com.google.maps.android.clustering.algo.Algorithm
-import com.google.maps.android.clustering.algo.GridBasedAlgorithm
-import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgorithm
-import com.google.maps.android.clustering.algo.PreCachingAlgorithmDecorator
 import com.robotemilio.glovotest.R
 import com.robotemilio.glovotest.domain.exception.CustomException
 import com.robotemilio.glovotest.domain.model.City
@@ -28,12 +23,17 @@ import com.robotemilio.glovotest.extensions.getViewModel
 import com.robotemilio.glovotest.extensions.logError
 import com.robotemilio.glovotest.extensions.observe
 import com.robotemilio.glovotest.ui.common.BaseFragment
+import kotlinx.android.synthetic.main.fragment_maps.*
 
 class MapsFragment : BaseFragment() {
 
+    companion object {
+        const val SELECTED_CITY = "selected_city"
+    }
+
     private lateinit var mMap: GoogleMap
     private lateinit var mapView: MapView
-    private lateinit var mapViewModel: MapsActivityViewModel
+    private lateinit var mapViewModel: MapsViewModel
     private lateinit var mClusterManager: ClusterManager<MapPoint>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -49,10 +49,16 @@ class MapsFragment : BaseFragment() {
         mapView = view.findViewById(R.id.map)
         mapView.onCreate(savedInstanceState)
         mapView.onResume()
-        mapView.getMapAsync { googleMap ->
-            mMap = googleMap
-            setUpClusterManager()
-            initViewModel()
+        mapView.getMapAsync { onMapLoaded(it) }
+    }
+
+    private fun onMapLoaded(googleMap: GoogleMap) {
+        mMap = googleMap
+        setUpClusterManager()
+        initViewModel()
+        arguments?.getSerializable(SELECTED_CITY)?.let {
+            val city = it as? City
+            city?.let { mapViewModel.getCityInfo(it) }
         }
     }
 
@@ -60,6 +66,11 @@ class MapsFragment : BaseFragment() {
         mClusterManager = ClusterManager(activity, mMap)
         mMap.setOnCameraIdleListener(mClusterManager)
         mMap.setOnMarkerClickListener(mClusterManager)
+        mMap.setOnCameraMoveListener { hideInfo() }
+    }
+
+    private fun hideInfo() {
+        motion_map_container.transitionToStart()
     }
 
     private fun initViewModel() {
@@ -75,13 +86,13 @@ class MapsFragment : BaseFragment() {
     }
 
     private fun onCurrentCityChanged(city: City?) {
-        Log.d("ANTONIO", city.toString())
+        city?.let(::showInfo)
     }
 
     private fun onCitiesReceived(cities: List<City>?) {
 
         cities?.forEach {
-            drawPolygon(it)
+            drawCityPolygons(it)
             addClusterMarker(it)
         }
     }
@@ -97,16 +108,22 @@ class MapsFragment : BaseFragment() {
                 true
             }
             setOnClusterItemClickListener {
-                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(it.getBounds(), 50))
+                mapViewModel.getCityInfo(it.city)
                 true
             }
         }
     }
 
+    private fun showInfo(city: City) {
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(city.bounds, 50))
+        city_info_view.setData(city)
+        motion_map_container.transitionToEnd()
+    }
+
     private fun onCountriesReceived(countries: List<Country>?) {
     }
 
-    private fun drawPolygon(city: City) {
+    private fun drawCityPolygons(city: City) {
         city.workingArea.forEach {
             if (it.points.size > 2) {
                 activity?.let { activity ->

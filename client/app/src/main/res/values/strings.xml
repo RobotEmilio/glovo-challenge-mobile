@@ -5,4 +5,7 @@
     <string name="dialog_gps_permission_message">We need the GPS permission to show you where you are.\nGrant access to GPS? </string>
     <string name="dialog_retry">Retry</string>
     <string name="dialog_deny">Deny</string>
+    <string name="city_info_title" translatable="false">%1$s (%2$s)</string>
+    <string name="city_info_line_1" translatable="false">%1$s, %2$s</string>
+    <string name="city_info_line_2" translatable="false">%1$s, %2$s</string>
 </resources>
