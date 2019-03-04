@@ -32,6 +32,9 @@ class SplashActivity : BaseActivity() {
 
     private fun onGPSPermissionDenied() {
         toast("GPS denied")
+        val intent = Intent(this, MapsActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun checkPermissions() {

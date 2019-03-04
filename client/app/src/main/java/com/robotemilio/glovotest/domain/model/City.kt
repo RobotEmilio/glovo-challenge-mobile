@@ -2,6 +2,7 @@ package com.robotemilio.glovotest.domain.model
 
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
+import java.io.Serializable
 
 data class City(
     val countryCode: String,
@@ -13,7 +14,7 @@ data class City(
     val workingArea: List<AreaShape>,
     var languageCode: String? = null,
     var busy: Boolean? = null
-) {
+) : Serializable {
 
     lateinit var center: LatLng
     lateinit var bounds: LatLngBounds
