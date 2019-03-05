@@ -19,7 +19,6 @@ import com.robotemilio.glovotest.R
 import com.robotemilio.glovotest.domain.model.City
 import com.robotemilio.glovotest.extensions.getViewModel
 import com.robotemilio.glovotest.extensions.observe
-import com.robotemilio.glovotest.extensions.toast
 import com.robotemilio.glovotest.ui.common.BaseFragment
 import com.robotemilio.glovotest.ui.map.MapsFragment.Companion.SELECTED_CITY
 
@@ -64,15 +63,6 @@ class SplashFragment : BaseFragment() {
         /*I took the liberty on supressing the lint error because we know
         that this method gets called only if we have the permission*/
         mLocationClient.lastLocation
-            .addOnCanceledListener {
-                context?.toast("last location cancelled")
-            }
-            .addOnCompleteListener {
-                context?.toast("last location completed")
-            }
-            .addOnFailureListener {
-                context?.toast("last location failed")
-            }
             .addOnSuccessListener {
                 splashViewModel.checkInRange(LatLng(it.latitude, it.longitude))
             }

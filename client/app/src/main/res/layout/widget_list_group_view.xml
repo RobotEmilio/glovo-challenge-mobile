@@ -10,10 +10,11 @@
     <TextView
         android:id="@+id/list_group_text"
         style="@android:style/TextAppearance.DeviceDefault.Large"
+        android:textColor="@color/gray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:maxLines="3"
         android:ellipsize="end"
         app:layout_constraintBottom_toBottomOf="parent"
