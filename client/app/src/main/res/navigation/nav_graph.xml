@@ -21,7 +21,9 @@
         tools:layout="@layout/fragment_country_list">
         <action
             android:id="@+id/showCountryInMap"
-            app:destination="@id/mapsFragment" />
+            app:destination="@id/mapsFragment"
+            app:popUpTo="@+id/countryListFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -31,9 +33,13 @@
         >
         <action
             android:id="@+id/showCountryList"
-            app:destination="@id/countryListFragment" />
+            app:destination="@id/countryListFragment"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/showMaps"
-            app:destination="@id/mapsFragment" />
+            app:destination="@id/mapsFragment"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
