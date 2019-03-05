@@ -1,0 +1,64 @@
+/*
+ * Copyright (c) 2018 IBM. All rights reserved.
+ */
+
+rootProject.ext {
+    /** Versions **/
+    //Project dependencies
+    androidKtxVersion = '1.0.1'
+    androidLifecycleVersion = '1.1.1'
+    androidLifecycleExtensionsVersion = '2.0.0'
+    androidArchNavigationVersion = '1.0.0-rc02'
+    androidMapsUtilsVersion = '0.5'
+    androidPlacesVersion = '1.0.0'
+    appCompatVersion = '1.0.0-beta01'
+    constraintLayoutVersion = '2.0.0-alpha2'
+    daggerVersion = "2.16"
+    gmapsVersion = '16.1.0'
+    gsonVersion = '2.8.0'
+    kotlinVersion = '1.3.21'
+    okHttpVersion = '3.4.1'
+    retrofitVersion = '2.3.0'
+    rxandroidVersion = '2.1.1'
+    rxjavaVersion = '2.2.7'
+    rxkotlinVersion = '2.3.0'
+
+    //Testing dependencies
+    androidTestRunner = '1.1.0-alpha4'
+    espressoVersion = '3.1.0-alpha4'
+    jUnitVersion = '4.12'
+
+    /**Dependencies**/
+    dependencies = [
+            androidArchLifecycle          : "androidx.lifecycle:lifecycle-viewmodel:$androidLifecycleVersion",
+            androidArchLifecycleExtensions: "androidx.lifecycle:lifecycle-extensions:$androidLifecycleExtensionsVersion",
+            androidKtx                    : "androidx.core:core-ktx:$androidKtxVersion",
+            androidMapsUtils              : "com.google.maps.android:android-maps-utils:$androidMapsUtilsVersion",
+            androidArchNavigation         : "android.arch.navigation:navigation-fragment:$androidArchNavigationVersion",
+            androidPlaces                 : "com.google.android.libraries.places:places:$androidPlacesVersion",
+            appcompat                     : "androidx.appcompat:appcompat:$appCompatVersion",
+            constraintLayout              : "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion",
+            dagger                        : "com.google.dagger:dagger:$daggerVersion",
+            daggerCompiler                : "com.google.dagger:dagger-compiler:$daggerVersion",
+            daggerAndroid                 : "com.google.dagger:dagger-android:$daggerVersion",
+            daggerAndroidSupport          : "com.google.dagger:dagger-android-support:$daggerVersion",
+            daggerAndroidProcessor        : "com.google.dagger:dagger-android-processor:$daggerVersion",
+            gmaps                         : "com.google.android.gms:play-services-maps:$gmapsVersion",
+            gson                          : "com.google.code.gson:gson:$gsonVersion",
+            kotlin                        : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion",
+            okhttp                        : "com.squareup.okhttp3:okhttp:$okHttpVersion",
+            okhttpLogging                 : "com.squareup.okhttp3:logging-interceptor:$okHttpVersion",
+            retrofit                      : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            retrofitRxAdapter             : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
+            retrofitGsonConverter         : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+            rxandroid                     : "io.reactivex.rxjava2:rxandroid:$rxandroidVersion",
+            rxjava                        : "io.reactivex.rxjava2:rxjava:$rxjavaVersion",
+            rxkotlin                      : "io.reactivex.rxjava2:rxkotlin:$rxkotlinVersion"
+    ]
+
+    testDependencies = [
+            androidTestRunner: "androidx.test:runner:$androidTestRunner",
+            espresso         : "androidx.test.espresso:espresso-core:$espressoVersion",
+            junit            : "junit:junit:$jUnitVersion"
+    ]
+}

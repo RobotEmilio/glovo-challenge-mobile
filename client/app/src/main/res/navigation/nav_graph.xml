@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.robotemilio.glovotest.ui.map.MapsFragment"
+        android:label="MapsFragment"
+        tools:layout="@layout/fragment_maps">
+        <argument
+            android:name="selectedCity"
+            app:argType="com.robotemilio.glovotest.domain.model.City" />
+    </fragment>
+    <fragment
+        android:id="@+id/countryListFragment"
+        android:name="com.robotemilio.glovotest.ui.countrylist.CountryListFragment"
+        android:label="CountryListFragment"
+        tools:layout="@layout/fragment_country_list">
+        <action
+            android:id="@+id/showCountryInMap"
+            app:destination="@id/mapsFragment"
+            app:popUpTo="@+id/countryListFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.robotemilio.glovotest.ui.splash.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/showCountryList"
+            app:destination="@id/countryListFragment"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/showMaps"
+            app:destination="@id/mapsFragment"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/goToNoServerFragment"
+            app:destination="@id/noServerFragment"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/noServerFragment"
+        android:name="com.robotemilio.glovotest.ui.splash.NoServerFragment"
+        android:label="NoServerFragment" />
+</navigation>
