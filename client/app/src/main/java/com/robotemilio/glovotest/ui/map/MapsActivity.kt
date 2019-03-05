@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -29,6 +31,15 @@ class MapsActivity : BaseActivity() {
         setContentView(R.layout.activity_maps)
     }
 
-
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        val navFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
+        navFragment?.let { navHostFragment ->
+            navHostFragment.childFragmentManager.primaryNavigationFragment?.onRequestPermissionsResult(
+                requestCode,
+                permissions,
+                grantResults
+            )
+        }
+    }
 
 }

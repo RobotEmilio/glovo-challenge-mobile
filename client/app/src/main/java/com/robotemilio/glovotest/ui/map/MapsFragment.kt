@@ -1,7 +1,6 @@
 package com.robotemilio.glovotest.ui.map
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,6 +55,7 @@ class MapsFragment : BaseFragment() {
         mMap = googleMap
         setUpClusterManager()
         initViewModel()
+
         arguments?.getSerializable(SELECTED_CITY)?.let {
             val city = it as? City
             city?.let { mapViewModel.getCityInfo(it) }
@@ -77,7 +77,6 @@ class MapsFragment : BaseFragment() {
         mapViewModel = getViewModel(activity as AppCompatActivity, viewModelFactory)
 
         //Manage subscriptions
-        observe(mapViewModel.countriesLiveData, ::onCountriesReceived)
         observe(mapViewModel.citiesLiveData, ::onCitiesReceived)
         observe(mapViewModel.currentCityLiveData, ::onCurrentCityChanged)
         observe(mapViewModel.errorsReceived, ::handleErrors)
@@ -90,7 +89,8 @@ class MapsFragment : BaseFragment() {
     }
 
     private fun onCitiesReceived(cities: List<City>?) {
-
+        mMap.clear()
+        mClusterManager.clearItems()
         cities?.forEach {
             drawCityPolygons(it)
             addClusterMarker(it)
@@ -120,9 +120,6 @@ class MapsFragment : BaseFragment() {
         motion_map_container.transitionToEnd()
     }
 
-    private fun onCountriesReceived(countries: List<Country>?) {
-    }
-
     private fun drawCityPolygons(city: City) {
         city.workingArea.forEach {
             if (it.points.size > 2) {
@@ -139,24 +136,12 @@ class MapsFragment : BaseFragment() {
         }
     }
 
-    private fun handleErrors(throwable: Throwable?) {
-        throwable?.let {
-            when (it) {
-                is CustomException -> handleCustomException(it)
-                else -> logError(it, true)
-            }
-        }
-    }
 
-    private fun handleCustomException(customException: CustomException) {
-        when (customException.code) {
-            CustomException.Code.NETWORK_ERROR -> {
-                Toast.makeText(activity, "Network error", Toast.LENGTH_SHORT).show()
-            }
-            CustomException.Code.UNKNOWN -> {
-                logError(customException, true)
-            }
-        }
+    override fun onDestroyView() {
+        mapView.onDestroy()
+        mMap.clear()
+        mClusterManager.clearItems()
+        super.onDestroyView()
     }
 
 }

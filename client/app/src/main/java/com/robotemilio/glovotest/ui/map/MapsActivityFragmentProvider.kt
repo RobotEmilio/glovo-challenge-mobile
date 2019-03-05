@@ -1,6 +1,7 @@
 package com.robotemilio.glovotest.ui.map
 
 import com.robotemilio.glovotest.ui.countrylist.CountryListFragment
+import com.robotemilio.glovotest.ui.splash.SplashFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -12,5 +13,8 @@ abstract class MapsActivityFragmentProvider {
 
     @ContributesAndroidInjector
     abstract fun provideCountriesList() : CountryListFragment
+
+    @ContributesAndroidInjector
+    abstract fun provideSplashFragment() : SplashFragment
 
 }
