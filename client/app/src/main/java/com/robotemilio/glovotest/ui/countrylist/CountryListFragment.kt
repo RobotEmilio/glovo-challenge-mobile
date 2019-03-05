@@ -51,6 +51,7 @@ class CountryListFragment : BaseFragment() {
         listViewModel = getViewModel(activity as AppCompatActivity, viewModelFactory)
 
         observe(listViewModel.countries, ::onCountriesReceived)
+        observe(listViewModel.errorsReceived, ::handleErrors)
     }
 
     private fun onCountriesReceived(countries: List<CountriesViewModel.CountryUiItem>?) {

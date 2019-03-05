@@ -9,4 +9,7 @@
     <string name="city_info_line_1">Timezone: %1$s, Currency: %2$s</string>
     <string name="city_info_line_2">Country: %1$s, Language: %2$s</string>
     <string name="city_list_info">Unfortunately, we couldn\'t locate you in the map\nPlease select a city of the list</string>
+    <string name="network_error">We have issues connecting to server. Please try again later…</string>
+    <string name="network_error_title">Oh no…</string>
+    <string name="network_error_description">It seems that the localhost server isn\'t connected.\n\nRemember to connect the server and to point the app to your local ip address in network_security_config.xml </string>
 </resources>
