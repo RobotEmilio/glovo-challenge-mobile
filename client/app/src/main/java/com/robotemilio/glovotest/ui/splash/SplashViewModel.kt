@@ -19,10 +19,10 @@ class SplashViewModel @Inject constructor(val getCountries: GetCountries) : Base
         getCountries.getCityList()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(onNext = {cities ->
-               cityInRange.value = cities.find { city ->
+            .subscribeBy(onNext = { cities ->
+                cityInRange.value = cities.find { city ->
                     city.workingArea.any {
-                        PolyUtil.containsLocation(lastLocation, it.points ,true)
+                        PolyUtil.containsLocation(lastLocation, it.points, true)
                     }
                 }
             }, onError = {

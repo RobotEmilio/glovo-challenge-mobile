@@ -8,8 +8,7 @@
         android:id="@+id/mapsFragment"
         android:name="com.robotemilio.glovotest.ui.map.MapsFragment"
         android:label="MapsFragment"
-        tools:layout="@layout/fragment_maps"
-        >
+        tools:layout="@layout/fragment_maps">
         <argument
             android:name="selectedCity"
             app:argType="com.robotemilio.glovotest.domain.model.City" />
@@ -29,8 +28,7 @@
         android:id="@+id/splashFragment"
         android:name="com.robotemilio.glovotest.ui.splash.SplashFragment"
         android:label="SplashFragment"
-        tools:layout="@layout/fragment_splash"
-        >
+        tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/showCountryList"
             app:destination="@id/countryListFragment"
@@ -41,5 +39,14 @@
             app:destination="@id/mapsFragment"
             app:popUpTo="@+id/nav_graph"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/goToNoServerFragment"
+            app:destination="@id/noServerFragment"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/noServerFragment"
+        android:name="com.robotemilio.glovotest.ui.splash.NoServerFragment"
+        android:label="NoServerFragment" />
 </navigation>

@@ -1,34 +1,37 @@
 package com.robotemilio.glovotest.ui.common
 
-import android.widget.Toast
+import com.robotemilio.glovotest.R
 import com.robotemilio.glovotest.di.DaggerViewModelFactory
-import com.robotemilio.glovotest.domain.exception.CustomException
+import com.robotemilio.glovotest.domain.exception.CustomExceptionWrapper
 import com.robotemilio.glovotest.extensions.logError
+import com.robotemilio.glovotest.extensions.toast
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 abstract class BaseFragment : DaggerFragment() {
 
     @Inject
-    lateinit var viewModelFactory : DaggerViewModelFactory
+    lateinit var viewModelFactory: DaggerViewModelFactory
 
-    protected fun handleErrors(throwable: Throwable?) {
+    protected open fun handleErrors(throwable: Throwable?) {
         throwable?.let {
             when (it) {
-                is CustomException -> handleCustomException(it)
+                is CustomExceptionWrapper -> handleCustomException(it)
                 else -> logError(it, true)
             }
         }
     }
 
-    private fun handleCustomException(customException: CustomException) {
-        when (customException.code) {
-            CustomException.Code.NETWORK_ERROR -> {
-                Toast.makeText(activity, "Network error", Toast.LENGTH_SHORT).show()
-            }
-            CustomException.Code.UNKNOWN -> {
-                logError(customException, true)
+    protected open fun handleCustomException(customExceptionWrapper: CustomExceptionWrapper) {
+        when (customExceptionWrapper.code) {
+            CustomExceptionWrapper.Code.NETWORK_ERROR -> handleNetworkError(customExceptionWrapper)
+            CustomExceptionWrapper.Code.UNKNOWN -> {
+                logError(customExceptionWrapper, true)
             }
         }
+    }
+
+    protected open fun handleNetworkError(customExceptionWrapper: CustomExceptionWrapper) {
+        activity?.toast(getString(R.string.network_error))
     }
 }

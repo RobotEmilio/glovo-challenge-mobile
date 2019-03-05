@@ -16,6 +16,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import com.robotemilio.glovotest.R
+import com.robotemilio.glovotest.domain.exception.CustomExceptionWrapper
 import com.robotemilio.glovotest.domain.model.City
 import com.robotemilio.glovotest.extensions.getViewModel
 import com.robotemilio.glovotest.extensions.observe
@@ -46,6 +47,7 @@ class SplashFragment : BaseFragment() {
         splashViewModel = getViewModel(activity as AppCompatActivity, viewModelFactory)
 
         observe(splashViewModel.cityInRange, ::onRangeResultReceived)
+        observe(splashViewModel.errorsReceived, ::handleErrors)
     }
 
     private fun onRangeResultReceived(city: City?) {
@@ -124,4 +126,10 @@ class SplashFragment : BaseFragment() {
             }
         }
     }
+
+    override fun handleNetworkError(customExceptionWrapper: CustomExceptionWrapper) {
+        Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+            .navigate(R.id.noServerFragment)
+    }
+
 }
