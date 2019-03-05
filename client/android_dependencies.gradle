@@ -10,6 +10,7 @@ rootProject.ext {
     androidLifecycleExtensionsVersion = '2.0.0'
     androidArchNavigationVersion = '1.0.0-rc02'
     androidMapsUtilsVersion = '0.5'
+    androidPlacesVersion = '1.0.0'
     appCompatVersion = '1.0.0-beta01'
     constraintLayoutVersion = '2.0.0-alpha2'
     daggerVersion = "2.16"
@@ -34,6 +35,7 @@ rootProject.ext {
             androidKtx                    : "androidx.core:core-ktx:$androidKtxVersion",
             androidMapsUtils              : "com.google.maps.android:android-maps-utils:$androidMapsUtilsVersion",
             androidArchNavigation         : "android.arch.navigation:navigation-fragment:$androidArchNavigationVersion",
+            androidPlaces                 : "com.google.android.libraries.places:places:$androidPlacesVersion",
             appcompat                     : "androidx.appcompat:appcompat:$appCompatVersion",
             constraintLayout              : "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion",
             dagger                        : "com.google.dagger:dagger:$daggerVersion",

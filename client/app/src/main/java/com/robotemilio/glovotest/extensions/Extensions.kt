@@ -13,7 +13,7 @@ inline fun <reified T : ViewModel> getViewModel(
 ): T {
     return ViewModelProviders.of(activity, factory)[T::class.java]
 }
-fun <T : Any, L : LiveData<T>> LifecycleOwner.observe(liveData: L, body: (T?) -> Unit) {
+fun <T : Any?, L : LiveData<T>> LifecycleOwner.observe(liveData: L, body: (T?) -> Unit) {
     liveData.observe(this, Observer(body))
 }
 

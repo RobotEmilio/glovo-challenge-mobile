@@ -36,6 +36,7 @@ dependencies {
     implementation d.androidArchLifecycle
     implementation d.androidArchLifecycleExtensions
     implementation d.androidArchNavigation
+    implementation d.androidPlaces
     implementation d.androidMapsUtils
     implementation d.constraintLayout
     implementation d.dagger

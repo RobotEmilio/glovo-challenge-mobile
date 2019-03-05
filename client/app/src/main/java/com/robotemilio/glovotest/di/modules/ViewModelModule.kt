@@ -6,6 +6,7 @@ import com.robotemilio.glovotest.ui.map.MapsViewModel
 import com.robotemilio.glovotest.di.DaggerViewModelFactory
 import com.robotemilio.glovotest.di.ViewModelKey
 import com.robotemilio.glovotest.ui.countrylist.CountriesViewModel
+import com.robotemilio.glovotest.ui.splash.SplashViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -28,4 +29,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CountriesViewModel::class)
     abstract fun bindCountriesViewModel(viewModel: CountriesViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SplashViewModel::class)
+    abstract fun bindSplashViewModel(viewModel: SplashViewModel) : ViewModel
 }
